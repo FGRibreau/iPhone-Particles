@@ -1,0 +1,8 @@
+CACHE MANIFEST
+
+# Bump this with each release:
+# Serial number 1
+
+Particle.js
+ParticlesView.js
+Loader.js
