@@ -1,24 +1,7 @@
-Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
-};
-
-window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
-              function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 60);
-              };
-})();
-
 function iPhoneParticle(){
-  this.pView = null;
   this.cvs = document.createElement('canvas');// canvas
   this.sz = null;// size
+  this.pView = null;// ParticlesView
   
   this.init = function(){
       setTimeout(scrollTo, 0, 0, 1);
@@ -55,13 +38,15 @@ function iPhoneParticle(){
   
   var p = function(fct, ctx){return function(){fct.apply(ctx, arguments)};};
   
+  // Make init & rotate contexte independent
   this.init = p(this.init, this);
   this.rotate = p(this.rotate, this);
 };
 
-// Helpers
+// Helper
+// http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
 iPhoneParticle.getSize = function(){
-	//http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
+	
 	var viewportwidth,
 		viewportheight;
 
@@ -82,3 +67,22 @@ iPhoneParticle.getSize = function(){
 	
 	return [viewportwidth, viewportheight];
 };
+
+// http://ejohn.org/blog/javascript-array-remove/
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       || 
+              window.webkitRequestAnimationFrame || 
+              window.mozRequestAnimationFrame    || 
+              window.oRequestAnimationFrame      || 
+              window.msRequestAnimationFrame     || 
+              function(/* function */ callback, /* DOMElement */ element){
+                window.setTimeout(callback, 1000 / 60);
+              };
+})();

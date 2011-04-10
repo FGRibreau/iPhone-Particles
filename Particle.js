@@ -1,9 +1,9 @@
 function Particle(x, y){
-	//Position initiale
+	// Inital position
 	this.x = x;
 	this.iy = this.y = y;
 	
-	// Vitesse initiale des particules
+	// Initial speed
 	var r1 = Math.random()
 	,   r2 = Math.random();
 	
@@ -14,29 +14,26 @@ function Particle(x, y){
 	
 	this.rgba = '';
 	
-	this.color = [
-	Math.round(r1*255),
-	Math.round(r2*255),
-	Math.round(Math.random()*255)];
+	this.color = [  Math.round(r1*255)
+                ,	Math.round(r2*255)
+                ,	Math.round(Math.random()*255)];
 }
 
 Particle.prototype = {
 	update: function(ParticleView){
 		var s = 30;
 		
-		// Maj de la vitesse
+		// Update speed
 		this.sy = this.sy + 10;
 		
-		// Maj de la position
+		// Update position
 		this.x = this.x + ((this.sx*s)/1000);
 		this.y = this.y + ((this.sy*s)/1000);
 		
-		this.rgba = 'rgb(' +
-		this.color[0] + ',' + 
-		this.color[1] + ',' + 
-		this.color[2] + ')';// + (ParticleView.sz[1]-this.y)/(ParticleView.sz[1]-this.iy) + ')';
+		this.rgba = 'rgb(' +this.color[0] + ',' + this.color[1] + ',' + this.color[2] + ')';
+		// + (ParticleView.sz[1]-this.y)/(ParticleView.sz[1]-this.iy) + ')';
 		
-		// Meurt s'il dépasse de l'écran
+		// Die die die !
 		if(this.y >= ParticleView.sz[1]-10){
 			this.life = 0;
 		}
