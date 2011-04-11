@@ -34,7 +34,7 @@ function ParticlesView(cvs, ctx){
 	this._mousedown = null;
 
   // Start to draw
-  requestAnimFrame(this._(this.draw));
+  this.animate();
 }
 
 ParticlesView.prototype = {
@@ -43,7 +43,7 @@ ParticlesView.prototype = {
 			this._mousedownPos = [e.offsetX, e.offsetY];
 		}
 
-    var i = 23;
+    var i = 25;
     while(i--){
       this.p.push(new Particle(this._mousedownPos[0], this._mousedownPos[1]));
     }
@@ -52,7 +52,7 @@ ParticlesView.prototype = {
 		var that = this;
 		this._mousedown = setTimeout(function(){
 			that.onMouseDown();
-		}, 10);
+		}, 25);
 	},
 	
 	onMouseMove: function(e){
@@ -85,9 +85,19 @@ ParticlesView.prototype = {
 	  }
 	},
 	
+	animate:function(){
+	  this.draw();
+	  requestAnimFrame(this._(this.animate), this.cvs);
+	},
+	
 	draw: function(){
-		var i = this.p.length;
+		var i = this.p.length
+		,   that = this;
 		
+		if(i === 0){
+		  return;
+		}
+
 		this.ctx.clearRect(0,0, this.sz[0], this.sz[1]);
 		
 		while(i--){
@@ -96,22 +106,21 @@ ParticlesView.prototype = {
 			
 			if(this.p[i].life == 0){	
 			  // Remove particle if needed
-			  
 				this.p.remove(i);
 				
 			} else {
 			  
 			  // Draw
 				this.ctx.fillStyle = this.p[i].rgba;
-				this.ctx.beginPath();
-				this.ctx.arc(this.p[i].x, this.p[i].y, 3,  0, 2*Math.PI, true);
-				this.ctx.fill();
-				this.ctx.closePath();
+				this.ctx.fillRect(this.p[i].x, this.p[i].y, 5,5);
+				
+				//this.ctx.beginPath();
+				//this.ctx.arc(this.p[i].x, this.p[i].y, 3,  0, 2*Math.PI, true);
+				//this.ctx.fill();
+				//this.ctx.closePath();
 			}
 		}
-
-		var that = this;
-		setTimeout(function(){that.draw();}, 30/1000);
+		
 	},
 	
 	updateSize: function(){
