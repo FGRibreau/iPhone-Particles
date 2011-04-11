@@ -3,6 +3,8 @@ CACHE MANIFEST
 # Bump this with each release:
 # Serial number 2
 
+index.html
+apple-touch-icon.png
 Particle.js
 ParticlesView.js
 Loader.js

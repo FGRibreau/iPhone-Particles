@@ -70,18 +70,12 @@ ParticlesView.prototype = {
 	onTouch: function(e){
 	  e.preventDefault();
 	  
-	  var t = e.changedTouches
+	  var t = e.touches//changedTouches
 	  ,   i = t.length
 	  ,   et = null;
 	  
 	  while(i--){
-	    et = t.item(i);
-	    
-	    var i = 2;
-      while(i--){
-        this.p.push(new Particle(et.clientX, et.clientY));
-      }
-      
+      this.p.push(new Particle(t[i].clientX, t[i].clientY));
 	  }
 	},
 	
